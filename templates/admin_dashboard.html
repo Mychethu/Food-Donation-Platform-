@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - FoodShare</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar admin-navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">FoodShare Admin</div>
+                <ul class="nav-links">
+                    <li><a href="/">Home</a></li>
+                 
+                    <li><a href="/admin/">Admin</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Section -->
+    <section class="admin-section">
+        <div class="container">
+            <div class="admin-header">
+                <h1>Admin Dashboard</h1>
+                <p>Manage donations and distributions</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid" style="color: #666;">
+                <div class="stat-card">
+                    
+                    <div class="stat-content">
+                        <p class="stat-value" style="color: #afb373;">{{ total }}</p>
+                        <p class="stat-title">Total Donations</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    
+                    <div class="stat-content">
+                        <p class="stat-value"style="color: #afb373;">{{ pending }}</p>
+                        <p class="stat-title">Pending</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    
+                    <div class="stat-content">
+                        <p class="stat-value"style="color: #afb373;">{{ picked_up }}</p>
+                        <p class="stat-title">Picked Up</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    
+                    <div class="stat-content">
+                        <p class="stat-value"style="color: #afb373;">{{ in_transit }}</p>
+                        <p class="stat-title">In Transit</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                  
+                    <div class="stat-content">
+                        <p class="stat-value"style="color: #afb373;">{{ completed }}</p>
+                        <p class="stat-title" >Completed</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Donations Table -->
+            <div class="admin-table-section">
+                <div class="table-header">
+                    <h2>All Donations</h2>
+                    <input type="text" id="searchInput" placeholder="Search by ID or donor name..." class="search-box">
+                </div>
+
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Donation ID</th>
+                                <th>Donor Name</th>
+                                <th>Contact</th>
+                                <th>Food Type</th>
+                                <th>Status</th>
+                                <th>Condition</th>
+                                <th>Assigned Team</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="donationTableBody">
+                            {% for donation in donations %}
+                            <tr>
+                                <td><strong>{{ donation.donation_id }}</strong></td>
+                                <td>{{ donation.full_name }}</td>
+                                <td>{{ donation.cont_no }}</td>
+                                <td>
+                                    <div style="font-size: 13px;">
+                                        {{ donation.food_type }}
+                                        {% if donation.food_photo %}
+                                            <br><a href="{{ donation.food_photo.url }}" target="_blank" style="color: #6366f1; text-decoration: none;">📷 View Photo</a>
+                                        {% endif %}
+                                        {% if donation.preparation_time %}
+                                            <br><small>⏰ {{ donation.preparation_time }}</small>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="status-badge {{ donation.status }}">
+                                        {% if donation.status == 'pending_approval' %}
+                                            ⏳ Pending
+                                        {% elif donation.status == 'approved' %}
+                                            ✅ Approved
+                                        {% elif donation.status == 'rejected' %}
+                                            ❌ Rejected
+                                        {% elif donation.status == 'picked_up' %}
+                                            ✓ Picked Up
+                                        {% elif donation.status == 'in_transit' %}
+                                            � Delivered
+                                        {% elif donation.status == 'delivered' %}
+                                            � In Transit
+                                        {% elif donation.status == 'completed' %}
+                                            ✅ Completed
+                                        {% endif %}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="condition-badge {{ donation.food_condition }}">
+                                        {% if donation.food_condition == 'fresh' %}
+                                            🌿 Fresh
+                                        {% elif donation.food_condition == 'good' %}
+                                            ✓ Good
+                                        {% elif donation.food_condition == 'acceptable' %}
+                                            ⚠️ Acceptable
+                                        {% else %}
+                                            ❓ Not Verified
+                                        {% endif %}
+                                    </span>
+                                </td>
+                                <td>{{ donation.team|default:"Not Assigned" }}</td>
+                                <td>
+                                    {% if donation.status == 'pending_approval' %}
+                                        <button class="btn-action btn-verify" onclick="showVerifyModal('{{ donation.donation_id }}')">Verify</button>
+                                    {% elif donation.status == 'approved' %}
+                                        <button class="btn-action btn-allocate" onclick="showAllocateModal('{{ donation.donation_id }}')">Allocate</button>
+                                    {% elif donation.status == 'completed' %}
+                                        <button class="btn-action btn-report" onclick="generateReport('{{ donation.donation_id }}')">📋 Report</button>
+                                    {% else %}
+                                        <button class="btn-action" onclick="editDonation('{{ donation.donation_id }}')">Edit</button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="8" style="text-align: center; padding: 20px;">No donations yet</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Delivery Teams Section -->
+            <div class="admin-table-section" style="margin-top: 40px;">
+                <div class="table-header">
+                    <h2>🚚 Delivery Team Details</h2>
+                    <button class="btn btn-primary" onclick="openAddTeamModal()">+ Add Team</button>
+                </div>
+
+                <!-- Add Team Modal -->
+                <div id="addTeamModal" class="modal hidden">
+                    <div class="modal-content admin-modal">
+                        <div class="modal-header">
+                            <h2>Add New Delivery Team</h2>
+                            <button type="button" class="modal-close" onclick="closeAddTeamModal()">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Team Name</label>
+                                <input type="text" id="newTeamNameInput" placeholder="e.g., Team Alpha, Team Bravo" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Team Leader Name (Optional)</label>
+                                <input type="text" id="teamLeaderInput" placeholder="Team leader's name">
+                            </div>
+                            <div class="form-group">
+                                <label>Contact Number (Optional)</label>
+                                <input type="text" id="teamContactInput" placeholder="Team contact number">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" onclick="createNewTeam()">Create Team</button>
+                            <button type="button" class="btn btn-secondary" onclick="closeAddTeamModal()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="teams-grid">
+                    {% if teams %}
+                        {% for team in teams %}
+                        <div class="team-card">
+                            <div class="team-header">
+                                <h3>👥 {{ team.name }}</h3>
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    {% if team.is_active %}
+                                        <span class="team-count">{{ team.get_donation_count }} active</span>
+                                    {% else %}
+                                        <span class="team-count" style="background-color: #ccc;">Inactive</span>
+                                    {% endif %}
+                                    <button class="btn-icon btn-delete-team" data-team-id="{{ team.id }}" data-team-name="{{ team.name }}" title="Delete team" style="background-color: #ff4757; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 14px;">🗑️</button>
+                                </div>
+                            </div>
+                            <div class="team-content">
+                                <div class="team-stat">
+                                    <span class="stat-label">Donations Assigned:</span>
+                                    <span class="stat-value">{{ team.get_donation_count }}</span>
+                                </div>
+                                <div class="team-stat">
+                                    <span class="stat-label">Team Leader:</span>
+                                    <span class="stat-value" style="font-size: 14px;">{{ team.leader_name|default:"Not assigned" }}</span>
+                                </div>
+                                <div class="team-stat">
+                                    <span class="stat-label">Contact:</span>
+                                    <span class="stat-value" style="font-size: 14px;">{{ team.contact_number|default:"Not provided" }}</span>
+                                </div>
+                                <div class="team-stat">
+                                    <span class="stat-label">Assignments:</span>
+                                    <ul class="donation-list">
+                                        {% with assigned_donations=donations|dictsort:"team" %}
+                                            {% regroup assigned_donations by team as team_donations %}
+                                            {% for group in team_donations %}
+                                                {% if group.grouper == team.name %}
+                                                    {% for donation in group.list %}
+                                                        <li>{{ donation.donation_id }} - <strong>{{ donation.food_type }}</strong></li>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endwith %}
+                                        {% if team.get_donation_count == 0 %}
+                                            <li style="color: #999; font-style: italic;">No assignments yet</li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                    <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+                        <p style="color: #999; font-size: 16px;">No delivery teams yet. Click <strong>+ Add Team</strong> to create one.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Verification Modal (Food Condition) -->
+            <div id="verifyModal" class="modal hidden">
+                <div class="modal-content admin-modal">
+                    <div class="modal-header">
+                        <h2>Verify Food Condition</h2>
+                        <button type="button" class="modal-close" onclick="closeVerifyModal()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Food Photo from Donor</label>
+                            <div id="donorPhotoContainer" style="margin-bottom: 16px; text-align: center;">
+                                <img id="donorPhotoPreview" src="" alt="Donor food photo" style="max-width: 100%; max-height: 300px; border-radius: 8px; border: 2px solid #e5e7eb;">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Food Condition</label>
+                            <div class="condition-options">
+                                <label class="radio-label">
+                                    <input type="radio" name="food_condition" value="fresh" required>
+                                    <span>🌿 Fresh - Just prepared, excellent quality</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="food_condition" value="good" required>
+                                    <span>✓ Good - Well maintained, suitable for distribution</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="food_condition" value="acceptable" required>
+                                    <span>⚠️ Acceptable - Slightly aged but still safe</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Admin Notes (Optional)</label>
+                            <textarea id="adminNotesInput" placeholder="Add verification notes..." rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="verifyAndApprove()">Verify & Approve</button>
+                        <button type="button" class="btn btn-danger" onclick="showRejectModal()">Reject</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeVerifyModal()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reject Modal -->
+            <div id="rejectModal" class="modal hidden">
+                <div class="modal-content admin-modal">
+                    <div class="modal-header">
+                        <h2>Reject Donation</h2>
+                        <button type="button" class="modal-close" onclick="closeRejectModal()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Rejection Reason</label>
+                            <textarea id="rejectionReasonInput" placeholder="Please provide a reason for rejection..." rows="4" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" onclick="rejectDonation()">Confirm Rejection</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeRejectModal()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Allocate to Team Modal -->
+            <div id="allocateModal" class="modal hidden">
+                <div class="modal-content admin-modal">
+                    <div class="modal-header">
+                        <h2>Allocate to Delivery Team</h2>
+                        <button type="button" class="modal-close" onclick="closeAllocateModal()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Select Team or Enter New Team Name</label>
+                            <input type="text" id="allocateTeamInput" placeholder="e.g., Team Alpha, Team Bravo..." required>
+                            <small style="color: #666; margin-top: 5px; display: block;">Enter the name of the delivery team</small>
+                        </div>
+                        <div style="background: #e8f4f8; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                            <p style="margin: 0; color: #0066cc;"><strong>ℹ️ Note:</strong> Once allocated to a team, the donation will be ready for pickup (Picked Up status)</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="allocateToTeam()">Allocate</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeAllocateModal()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Modal -->
+            <div id="editModal" class="modal hidden">
+                <div class="modal-content admin-modal">
+                    <div class="modal-header">
+                        <h2>Edit Donation</h2>
+                        <button type="button" class="modal-close" onclick="closeEditModal()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select id="statusSelect">
+                                <option value="pending_approval">Pending Approval</option>
+                                <option value="approved">Approved</option>
+                                <option value="picked_up">Picked Up</option>
+                                <option value="in_transit">In Transit</option>
+                                <option value="delivered">Delivered</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Assigned Team</label>
+                            <input type="text" id="teamInput" placeholder="e.g., Team Alpha">
+                        </div>
+                        <div class="form-group">
+                            <label>Distribution Location/Center</label>
+                            <input type="text" id="locationInput" placeholder="Kadubeesanahalli, Bengaluru, Karnataka">
+                        </div>
+                        <div class="form-group">
+                            <label>People Served</label>
+                            <input type="number" id="peopleServedInput" placeholder="Number of people served" min="15">
+                        </div>
+                        <div class="form-group">
+                            <label>Notes</label>
+                            <textarea id="notesInput" placeholder="Add any notes..." rows="4"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="saveDonationEdit()">Save Changes</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="/static/js/admin_dashboard.js"></script>
+</body>
+</html>

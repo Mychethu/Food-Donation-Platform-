@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Registration - Food Donation</title>
+    <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at top left, #ffd56b 0, transparent 50%),
+                        radial-gradient(circle at bottom right, #8ec5fc 0, transparent 55%),
+                        linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .signup-shell {
+            width: 100%;
+            max-width: 1000px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 18px;
+            box-shadow: 0 25px 70px rgba(15, 23, 42, 0.35);
+            display: grid;
+            grid-template-columns:  1fr;
+            overflow: hidden;
+            backdrop-filter: blur(6px);
+            animation: fadeInUp 0.55s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Left banner */
+        .signup-banner {
+            background: linear-gradient(145deg, #ffb347 0%, #ffcc33 25%, #ff9a9e 60%, #fad0c4 100%);
+            padding: 32px 28px;
+            color: #1e293b;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .banner-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.85);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            font-weight: 600;
+        }
+
+        .banner-tag span.icon {
+            font-size: 14px;
+        }
+
+        .banner-title {
+            margin-top: 24px;
+        }
+
+        .banner-title h1 {
+            font-size: 30px;
+            line-height: 1.25;
+            margin-bottom: 10px;
+        }
+
+        .banner-title h1 span {
+            color: #7c3aed;
+        }
+
+        .banner-title p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .banner-stats {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 12px;
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            font-size: 17px;
+        }
+
+        .banner-footer {
+            margin-top: 32px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .banner-pill {
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            font-size: 11px;
+        }
+
+        /* Right form section */
+        .signup-container {
+            padding: 32px 30px;
+            position: relative;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 16px;
+            color: #6366f1;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #4f46e5;
+            transform: translateX(-2px);
+        }
+
+        .logo-section {
+            margin-bottom: 18px;
+        }
+
+        .logo-heading {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .logo-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #fff;
+        }
+
+        .logo-section h1 {
+            color: #1f2933;
+            font-size: 22px;
+            letter-spacing: 0.02em;
+        }
+
+        .logo-section p {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .subtitle-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: #eef2ff;
+            color: #4f46e5;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .alert {
+            background-color: #fef2f2;
+            color: #b91c1c;
+            padding: 10px 12px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            border-left: 4px solid #fecaca;
+            font-size: 13px;
+        }
+
+        form {
+            margin-top: 6px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .form-row-two {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            width: 100%;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        label {
+            color: #374151;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        label span.required {
+            color: #ef4444;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 11px 12px 11px 34px;
+            border: 1.8px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            background: #f9fafb;
+        }
+
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: #6366f1;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .error-message {
+            color: #dc2626;
+            font-size: 12px;
+        }
+
+        .helper-text {
+            font-size: 11px;
+            color: #9ca3af;
+        }
+
+        .password-strength {
+            font-size: 11px;
+            margin-top: 4px;
+            padding: 7px 9px;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .password-strength.show {
+            display: block;
+        }
+
+        .strength-weak {
+            background-color: #fef2f2;
+            color: #b91c1c;
+        }
+
+        .strength-fair {
+            background-color: #fffbeb;
+            color: #92400e;
+        }
+
+        .strength-good {
+            background-color: #ecfdf3;
+            color: #166534;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 11px;
+            margin-top: 6px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 45%, #ec4899 100%);
+            color: white;
+            border: none;
+            border-radius: 999px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+            box-shadow: 0 12px 30px rgba(129, 140, 248, 0.45);
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.03);
+            box-shadow: 0 16px 40px rgba(129, 140, 248, 0.55);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 10px 26px rgba(129, 140, 248, 0.42);
+        }
+
+        .btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 8px 20px rgba(129, 140, 248, 0.3);
+        }
+
+        .signup-footer {
+            text-align: center;
+            margin-top: 16px;
+            color: #6b7280;
+        }
+
+        .signup-footer p {
+            font-size: 13px;
+        }
+
+        .signup-footer a {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .signup-footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 900px) {
+            .signup-shell {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+
+            .signup-banner {
+                display: none;
+            }
+
+            body {
+                padding: 18px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .signup-container {
+                padding: 24px 18px;
+            }
+
+            .logo-section h1 {
+                font-size: 20px;
+            }
+
+            .form-row-two {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-shell">
+        
+
+        <!-- Right form side -->
+        <div class="signup-container">
+            <a href="/" class="back-link">
+                ← Back to Home
+            </a>
+
+            <div class="logo-section">
+                <div class="logo-heading">
+                    <div class="logo-icon">🍽️</div>
+                    <h1>Food Donation</h1>
+                </div>
+                <p>Create your donor account to start sharing food safely and quickly.</p>
+                <div class="subtitle-badge">
+                    <span>Donor Registration</span>
+                </div>
+            </div>
+
+            {% if errors %}
+                {% for field, error_list in errors.items %}
+                    {% for error in error_list %}
+                        <div class="alert">{{ error }}</div>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="full_name">Full Name <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">👤</span>
+                            <input 
+                                type="text" 
+                                id="full_name" 
+                                name="full_name"
+                                value="{{ full_name }}"
+                                placeholder="Enter your full name"
+                                required
+                            >
+                        </div>
+                        {% if errors.full_name %}
+                            {% for error in errors.full_name %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">📧</span>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email"
+                                value="{{ email }}"
+                                placeholder="you@example.com"
+                                required
+                            >
+                        </div>
+                        {% if errors.email %}
+                            {% for error in errors.email %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number <span class="helper-text">(optional)</span></label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">📱</span>
+                            <input 
+                                type="tel" 
+                                id="phone" 
+                                name="phone"
+                                value="{{ phone }}"
+                                placeholder="e.g. +91 98765 43210"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-row-two">
+                        <div class="form-group">
+                            <label for="password">Password <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">🔒</span>
+                                <input 
+                                    type="password" 
+                                    id="password" 
+                                    name="password"
+                                    placeholder="Minimum 6 characters"
+                                    required
+                                >
+                            </div>
+                            <div id="password-strength" class="password-strength"></div>
+                            {% if errors.password %}
+                                {% for error in errors.password %}
+                                    <span class="error-message">{{ error }}</span>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirm_password">Confirm Password <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">✅</span>
+                                <input 
+                                    type="password" 
+                                    id="confirm_password" 
+                                    name="confirm_password"
+                                    placeholder="Re-enter your password"
+                                    required
+                                >
+                            </div>
+                            {% if errors.confirm_password %}
+                                {% for error in errors.confirm_password %}
+                                    <span class="error-message">{{ error }}</span>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">Create Donor Account</button>
+            </form>
+
+            <div class="signup-footer">
+                <p>Already have an account? <a href="/login/">Login here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirm_password');
+        const strengthDiv = document.getElementById('password-strength');
+        const form = document.querySelector('form');
+
+        // Password strength indicator
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            let strength = '';
+            let strengthScore = 0;
+
+            if (password.length === 0) {
+                strengthDiv.classList.remove('show');
+                return;
+            }
+
+            if (password.length >= 6) strengthScore++;
+            if (password.length >= 8) strengthScore++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strengthScore++;
+            if (/\d/.test(password)) strengthScore++;
+            if (/[^a-zA-Z\d]/.test(password)) strengthScore++;
+
+            strengthDiv.classList.add('show');
+
+            if (strengthScore <= 2) {
+                strength = 'Weak password – try adding more characters and a mix of letters.';
+                strengthDiv.className = 'password-strength show strength-weak';
+            } else if (strengthScore <= 3) {
+                strength = 'Fair password – add numbers or symbols for extra strength.';
+                strengthDiv.className = 'password-strength show strength-fair';
+            } else {
+                strength = 'Strong password – great choice!';
+                strengthDiv.className = 'password-strength show strength-good';
+            }
+
+            strengthDiv.textContent = strength;
+            validatePasswordMatch();
+        });
+
+        // Real-time password match validation
+        confirmPasswordInput.addEventListener('input', validatePasswordMatch);
+
+        function validatePasswordMatch() {
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+            
+            if (confirmPassword.length === 0) return;
+            
+            if (password === confirmPassword) {
+                confirmPasswordInput.style.borderColor = '#10b981';
+                confirmPasswordInput.style.background = '#f0fdf4';
+            } else {
+                confirmPasswordInput.style.borderColor = '#ef4444';
+                confirmPasswordInput.style.background = '#fef2f2';
+            }
+        }
+
+        // Form validation before submission
+        form.addEventListener('submit', function(e) {
+            const fullName = document.getElementById('full_name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = passwordInput.value.trim();
+            const confirmPassword = confirmPasswordInput.value.trim();
+
+            // Check if passwords match
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                alert('❌ Passwords do not match. Please re-enter your password.');
+                confirmPasswordInput.focus();
+                confirmPasswordInput.style.borderColor = '#ef4444';
+                confirmPasswordInput.style.background = '#fef2f2';
+                return false;
+            }
+
+            // Check password length
+            if (password.length < 6) {
+                e.preventDefault();
+                alert('❌ Password must be at least 6 characters long.');
+                passwordInput.focus();
+                return false;
+            }
+
+            // Check required fields
+            if (!fullName || !email || !password) {
+                e.preventDefault();
+                alert('❌ Please fill in all required fields.');
+                return false;
+            }
+
+            // If all validations pass, show processing
+            const btn = form.querySelector('.btn');
+            btn.disabled = true;
+            btn.textContent = 'Creating Account...';
+        });
+    </script>
+</body>
+</html>

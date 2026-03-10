@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Donation - FoodShare</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">🍲 FoodShare</div>
+                <ul class="nav-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/donate/">Donate Food</a></li>
+                    <li><a href="/track/">Track Donation</a></li>
+                    <li><a href="/admin/">Admin Panel</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Track Section -->
+    <section class="track-section">
+        <div class="container">
+            <div class="track-container">
+                <h1>Track Your Donation</h1>
+                <p class="track-description">Enter your Donation ID to see the latest status and impact</p>
+
+                <div class="track-form-container">
+                    <div class="form-group">
+                        <input type="text" id="donationIdInput" placeholder="Enter Donation ID (e.g., DON-ABC12345)">
+                        <button id="trackBtn" class="btn btn-primary">Track Donation</button>
+                    </div>
+                </div>
+
+                <div id="trackResult" class="track-result hidden">
+                    <div class="donation-details">
+                        <h2>Donation Details</h2>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <span class="detail-label">Donation ID:</span>
+                                <span class="detail-value" id="resId">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Donor Name:</span>
+                                <span class="detail-value" id="resName">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Contact:</span>
+                                <span class="detail-value" id="resContact">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Food Type:</span>
+                                <span class="detail-value" id="resFood">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Pickup Location:</span>
+                                <span class="detail-value" id="resLocation">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Assigned Team:</span>
+                                <span class="detail-value" id="resTeam">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="status-section">
+                        <h2>Current Status</h2>
+                        <div class="status-display" id="statusDisplay">
+                            <div class="status-badge pending">⏳ Pending</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-section">
+                        <h2>Donation Journey</h2>
+                        <div class="timeline">
+                            <div class="timeline-item" id="tl1">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <p class="timeline-status">Pending</p>
+                                    <p class="timeline-description">Submitted</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item" id="tl2">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <p class="timeline-status">Picked Up</p>
+                                    <p class="timeline-description">Collected by team</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item" id="tl3">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <p class="timeline-status">In Transit</p>
+                                    <p class="timeline-description">On the way</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item" id="tl4">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <p class="timeline-status">Delivered</p>
+                                    <p class="timeline-description">At distribution center</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item" id="tl5">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <p class="timeline-status">Completed</p>
+                                    <p class="timeline-description">Distributed to needy</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="impact-section" id="impactSection" style="display: none;">
+                        <h2>Your Impact</h2>
+                        <div class="impact-grid">
+                            <div class="impact-card">
+                                <div class="impact-icon">👥</div>
+                                <div class="impact-data">
+                                    <p class="impact-number" id="peopleServed">-</p>
+                                    <p class="impact-label">People Served</p>
+                                </div>
+                            </div>
+                            <div class="impact-card">
+                                <div class="impact-icon">⭐</div>
+                                <div class="impact-data">
+                                    <p class="impact-number" id="satisfaction">-</p>
+                                    <p class="impact-label">Satisfaction Rating</p>
+                                </div>
+                            </div>
+                            <div class="impact-card">
+                                <div class="impact-icon">📍</div>
+                                <div class="impact-data">
+                                    <p class="impact-number" id="center">-</p>
+                                    <p class="impact-label">Distribution Center</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-secondary" onclick="resetTrack()">Track Another Donation</button>
+                </div>
+
+                <div id="notFoundMessage" class="not-found-message hidden">
+                    <p>❌ Donation not found. Please check your Donation ID and try again.</p>
+                    <button class="btn btn-secondary" onclick="resetTrack()">Try Again</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <script src="/static/js/track_donation.js"></script>
+</body>
+</html>

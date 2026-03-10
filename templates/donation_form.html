@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate Food - FoodShare</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">🍲 FoodShare</div>
+                <ul class="nav-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/donate/">Donate Food</a></li>
+                    <li><a href="/track/">Track Donation</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Donation Form Section -->
+    <section class="form-section">
+        <div class="container">
+            <div class="form-container">
+                <h1>Register Your Food Donation</h1>
+                <p class="form-description">Help us serve those in need. Fill in your donation details below.</p>
+
+                <form id="donationForm" class="donation-form" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="fullName">Full Name *</label>
+                        <input type="text" id="fullName" name="full_name" placeholder="e.g., John Doe" required>
+                        <span class="error-message"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contactNo">Contact Number *</label>
+                        <input type="tel" id="contactNo" name="cont_no" placeholder="e.g., 9876543210" required>
+                        <span class="error-message"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="foodType">Food Type *</label>
+                        <textarea id="foodType" name="food_type" placeholder="e.g., Rice, Dal, Vegetables" rows="3" required></textarea>
+                        <span class="error-message"></span>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="preparationTime">Food Preparation Time *</label>
+                            <input type="time" id="preparationTime" name="preparation_time" required>
+                            <small>When was the food prepared?</small>
+                            <span class="error-message"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="foodPhoto">Food Photo *</label>
+                            <input type="file" id="foodPhoto" name="food_photo" accept="image/*" required>
+                            <small>Upload a photo of the prepared food</small>
+                            <span class="error-message"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cookingDateTime">Cooking Date & Time *</label>
+                            <input type="datetime-local" id="cookingDateTime" name="cdt" required>
+                            <span class="error-message"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pickupDateTime">Pickup Date & Time *</label>
+                            <input type="datetime-local" id="pickupDateTime" name="pdt" required>
+                            <span class="error-message"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pickupLocation">Pickup Location *</label>
+                        <input type="text" id="pickupLocation" name="ploc" placeholder="e.g., 123 Main Street, Delhi" required>
+                        <span class="error-message"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-submit">Send</button>
+                </form>
+
+                <div id="successModal" class="modal hidden">
+                    <div class="modal-content success-modal">
+                        <div class="modal-header">
+                            <h2>✅ DONATION SUBMITTED SUCCESSFULLY!</h2>
+                        </div>
+                        <div class="modal-body">
+                            <p class="modal-section-title">YOUR DONATION ID:</p>
+                            <div class="donation-id-box">
+                                <span id="donationIdDisplay">DON-ABC12345</span>
+                                <button type="button" class="btn-copy" onclick="copyDonationId()">Copy</button>
+                            </div>
+                            
+                            <p class="donation-id-note">Save this ID to track your donation</p>
+
+                            <h3>What Happens Next:</h3>
+                            <ul class="next-steps">
+                                <li>✓ Your donation details have been registered in our system</li>
+                                <li>✓ Our team will contact you for pickup</li>
+                                <li>✓ Use your Donation ID to track status anytime</li>
+                                <li>✓ You'll receive updates via email/SMS</li>
+                            </ul>
+
+                            <div class="warning-box">
+                                <p><strong>⚠️ IMPORTANT:</strong> Keep your Donation ID safe. You'll need it to track your donation.</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" onclick="closeSuccessModal()">Done</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="errorModal" class="modal hidden">
+                    <div class="modal-content error-modal">
+                        <div class="modal-header">
+                            <h2>❌ Error</h2>
+                        </div>
+                        <div class="modal-body">
+                            <p id="errorMessage"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" onclick="closeErrorModal()">Try Again</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script src="/static/js/donation_form.js"></script>
+</body>
+</html>

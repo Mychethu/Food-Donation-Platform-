@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Donation - Share the Blessing</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">FoodShare</div>
+                <ul class="nav-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/admin-login">Admin Panel</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="/dashboard/">Dashboard</a></li>
+                        <li><a href="/logout/">Logout</a></li>
+                    {% else %}
+                        <li><a href="/login/">Login</a></li>
+                        <li><a href="/signup/">Sign Up</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                {% if user.is_authenticated %}
+                    <h1>Welcome Back, {{ user.get_full_name|default:user.email }}! 👋</h1>
+                    <p>Continue sharing food and making an impact in your community</p>
+                    <div class="hero-buttons">
+                        <a href="/donate/" class="btn btn-primary">➕ Make a New Donation</a>
+                        <a href="/dashboard/" class="btn btn-secondary">📊 My Dashboard</a>
+                        <a href="/track/" class="btn btn-secondary">🔍 Track Donation</a>
+                    </div>
+                {% else %}
+                    <h1>Share Food, Share Hope</h1>
+                    <p>Because no one should go hungry when kindness can be shared</p>
+                    <div class="hero-buttons">
+                        <a href="/signup/" class="btn btn-primary">Get Started</a>
+                      
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stat-card" style="color: rgb(82, 81, 81); font-size: 20px">
+                <div class="stat-number">{{ total_donations }}</div>
+                <div class="stat-label" style="color: rgb(14, 116, 34);">Total Donations</div>
+            </div>
+            <div class="stat-card" style="color: rgb(82, 81, 81); font-size: 20px">
+                <div class="stat-number">{{ completed_donations }}</div>
+                <div class="stat-label" style="color: rgb(14, 116, 34);">Completed</div>
+            </div>
+            <div class="stat-card" style="color: rgb(82, 81, 81); font-size: 20px">
+                <div class="stat-number">{{ people_served }}</div>
+                <div class="stat-label" style="color: rgb(14, 116, 34);">People Served</div>
+            </div>
+            <div class="stat-card" style="color: rgb(82, 81, 81); font-size: 20px">
+                <div class="stat-number">{{ total_donations|add:50 }}</div>
+                <div class="stat-label" style="color: rgb(14, 116, 34);">Meals Distributed</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            {% if user.is_authenticated %}
+                <h2>Your Donation Journey</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">➕</div>
+                        <h3>Create Donations</h3>
+                        <p>Register new food donations with detailed information</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <h3>Real-time Tracking</h3>
+                        <p>Track your donation status from pickup to distribution</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>View Dashboard</h3>
+                        <p>See all your donations and impact statistics</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">👥</div>
+                        <h3>Direct Impact</h3>
+                        <p>See exactly how many people benefited from your donation</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📈</div>
+                        <h3>Detailed Reports</h3>
+                        <p>Get comprehensive reports of distribution and feedback</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">👤</div>
+                        <h3>Manage Profile</h3>
+                        <p>Update your information and donation preferences</p>
+                    </div>
+                </div>
+            {% else %}
+             
+                <div class="feature-grid">
+                   
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Register Your Food</h3>
+                    <p>Fill out donation form with food details</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Get Donation ID</h3>
+                    <p>Receive unique ID to track your donation</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>We Arrange Pickup</h3>
+                    <p>Our team picks up at scheduled time</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Distribution</h3>
+                    <p>Food reaches needy families instantly</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <h3>Impact Report</h3>
+                    <p>See detailed distribution & feedback</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+</body>
+</html>

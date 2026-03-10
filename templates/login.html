@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Login - Food Donation</title>
+    <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: radial-gradient(circle at top left, #ffd56b 0, transparent 50%),
+                        radial-gradient(circle at bottom right, #8ec5fc 0, transparent 55%),
+                        linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 430px;
+            background: rgba(255, 255, 255, 0.92);
+            padding: 38px 32px;
+            border-radius: 20px;
+            box-shadow: 0 25px 60px rgba(15, 23, 42, 0.35);
+            backdrop-filter: blur(6px);
+            animation: fadeUp 0.45s ease-out;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: #6366f1;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .back-link:hover {
+            color: #4f46e5;
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo-heading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+        }
+
+        .logo-section h1 {
+            font-size: 24px;
+            color: #1e293b;
+        }
+
+        .logo-section p {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .alert {
+            background-color: #fde4e4;
+            color: #b91c1c;
+            padding: 12px;
+            border-left: 4px solid #fca5a5;
+            border-radius: 10px;
+            margin-bottom: 18px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 12px 14px 12px 38px;
+            border: 1.8px solid #e5e7eb;
+            background: #f9fafb;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .input-wrapper input:focus {
+            border-color: #6366f1;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+            outline: none;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 15px;
+            opacity: 0.7;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 12px 0 18px;
+        }
+
+        .remember-me label {
+            font-size: 13px;
+            color: #374151;
+            font-weight: 400;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 40%, #ec4899 100%);
+            color: white;
+            border: none;
+            border-radius: 999px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.2s ease;
+            box-shadow: 0 12px 30px rgba(129, 140, 248, 0.45);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 40px rgba(129, 140, 248, 0.55);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .login-footer {
+            margin-top: 22px;
+            text-align: center;
+        }
+
+        .login-footer p {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .login-footer a {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+        <a href="/" class="back-link">← Back to Home</a>
+
+        <div class="logo-section">
+            <div class="logo-heading">
+                <div class="logo-icon">🍽️</div>
+                <h1>Food Donation</h1>
+            </div>
+            <p>Donor Login</p>
+        </div>
+
+        {% if error %}
+        <div class="alert">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">📧</span>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" value="{{ email }}" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🔒</span>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+            </div>
+
+            <div class="remember-me">
+                <input type="checkbox" id="remember" name="remember">
+                <label for="remember">Remember me</label>
+            </div>
+
+            <button type="submit" class="btn">Login</button>
+        </form>
+
+        <div class="login-footer">
+            <p>Don't have an account? <a href="/signup/">Sign up here</a></p>
+            <p style="margin-top: 10px; font-size: 12px;">
+                
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Background -->
+  <circle cx="100" cy="100" r="95" fill="#E8F5E9" stroke="#2D5F4F" stroke-width="2"/>
+  
+  <!-- Heart shape background -->
+  <path d="M 100 170 C 60 140 40 115 40 90 C 40 70 55 55 70 55 C 80 55 90 62 100 72 C 110 62 120 55 130 55 C 145 55 160 70 160 90 C 160 115 140 140 100 170 Z" 
+        fill="#FFFFFF" stroke="#2D5F4F" stroke-width="2.5"/>
+  
+  <!-- Food items inside heart -->
+  <!-- Apple -->
+  <circle cx="75" cy="85" r="8" fill="#E53935"/>
+  <ellipse cx="75" cy="75" rx="3" ry="4" fill="#2D5F4F"/>
+  
+  <!-- Carrot -->
+  <path d="M 125 90 L 130 110 L 125 110 L 120 90 Z" fill="#FF9800"/>
+  <line x1="122" y1="88" x2="128" y2="88" stroke="#2D5F4F" stroke-width="1"/>
+  
+  <!-- Broccoli -->
+  <circle cx="100" cy="80" r="7" fill="#4CAF50"/>
+  <path d="M 100 87 L 98 92 L 102 92 Z" fill="#2D5F4F" stroke-width="0.5"/>
+  
+  <!-- Orange/citrus -->
+  <circle cx="110" cy="70" r="6" fill="#FF9800"/>
+  <circle cx="110" cy="70" r="4" fill="#FFB74D" opacity="0.6"/>
+  
+  <!-- Fork -->
+  <line x1="85" y1="105" x2="85" y2="125" stroke="#2D5F4F" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="75" y1="120" x2="75" y2="130" stroke="#2D5F4F" stroke-width="2"/>
+  <line x1="85" y1="120" x2="85" y2="130" stroke="#2D5F4F" stroke-width="2"/>
+  <line x1="95" y1="120" x2="95" y2="130" stroke="#2D5F4F" stroke-width="2"/>
+  
+  <!-- Spoon -->
+  <path d="M 115 105 Q 120 110 120 120 L 115 120 Q 115 115 110 112" 
+        stroke="#2D5F4F" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <ellipse cx="122" cy="122" rx="4" ry="5" fill="#2D5F4F"/>
+  
+  <!-- Helping hand below -->
+  <g transform="translate(100, 155)">
+    <!-- Palm -->
+    <rect x="-18" y="0" width="36" height="20" rx="8" fill="#FFB997" stroke="#2D5F4F" stroke-width="1.5"/>
+    <!-- Fingers -->
+    <rect x="-15" y="-8" width="5" height="10" rx="2" fill="#FFB997" stroke="#2D5F4F" stroke-width="1"/>
+    <rect x="-5" y="-10" width="5" height="12" rx="2" fill="#FFB997" stroke="#2D5F4F" stroke-width="1"/>
+    <rect x="5" y="-10" width="5" height="12" rx="2" fill="#FFB997" stroke="#2D5F4F" stroke-width="1"/>
+    <rect x="15" y="-8" width="5" height="10" rx="2" fill="#FFB997" stroke="#2D5F4F" stroke-width="1"/>
+    <!-- Thumb -->
+    <ellipse cx="-22" cy="8" rx="4" ry="6" fill="#FFB997" stroke="#2D5F4F" stroke-width="1"/>
+    <!-- Wrist -->
+    <rect x="-8" y="18" width="16" height="12" rx="3" fill="#87CEEB" stroke="#2D5F4F" stroke-width="1.5"/>
+  </g>
+</svg>
+  
+  <!-- Decorative leaves -->
+  <ellipse cx="132" cy="95" rx="4" ry="7" fill="#4CAF50" transform="rotate(-30 132 95)"/>
+  <ellipse cx="65" cy="100" rx="4" ry="7" fill="#4CAF50" transform="rotate(30 65 100)"/>
+</svg>
