@@ -87,8 +87,6 @@ Food-Donation-Platform
 │
 └── README.md
 
----
-
 #  Installation and Setup
 
 # Clone the Repository
@@ -111,13 +109,10 @@ npm start
 
 http://localhost:3000
 
----
+
 
 # Database Setup
 
 1. Open **MySQL Workbench**
 2. Create a new database
 
-
-GitHub:
-https://github.com/Mychethu
