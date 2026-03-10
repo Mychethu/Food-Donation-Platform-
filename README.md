@@ -52,7 +52,7 @@ This platform helps create awareness about food sharing and promotes a culture o
 
 # Backend
 * Python
-* Digango 
+* Diango 
 * Node.js
 
 # Database
