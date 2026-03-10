@@ -1,6 +1,6 @@
-# 🍲 Food Donation Platform
+#  Food Donation Platform
 
-## 📌 Project Overview
+ Project Overview
 
 The **Food Donation Platform** is a web-based application designed to reduce food wastage by allowing people to donate surplus food to those who need it.
 
@@ -10,7 +10,7 @@ This platform helps create awareness about food sharing and promotes a culture o
 
 ---
 
-# 🎯 Objectives
+ Objectives
 
 * Reduce food wastage
 * Encourage people to donate extra food
@@ -20,22 +20,22 @@ This platform helps create awareness about food sharing and promotes a culture o
 
 ---
 
-# ⚙️ Features
+#  Features
 
-## 👤 User Module
+##  User Module
 
 * User Registration and Login
 * Donate surplus food
 * View donation details
 * Manage donated food information
 
-## 🍱 Food Donation
+# Food Donation
 
 * Users can add food donation details
 * Food type, quantity, location, and contact information can be added
 * Other users can view available food donations
 
-## 🔑 Admin Module
+# Admin Module
 
 * Manage users
 * Monitor food donations
@@ -43,24 +43,23 @@ This platform helps create awareness about food sharing and promotes a culture o
 
 ---
 
-# 🛠 Technologies Used
-
-## Frontend
+# Technologies Used
+# Frontend
 
 * HTML
 * CSS
 * JavaScript
 
-## Backend
-
+# Backend
+* Python
+* Digango 
 * Node.js
-* Express.js
 
-## Database
+# Database
 
 * MySQL
 
-## Tools
+# Tools
 
 * Git
 * GitHub
@@ -68,7 +67,7 @@ This platform helps create awareness about food sharing and promotes a culture o
 
 ---
 
-# 📂 Project Structure
+# Project Structure
 
 Food-Donation-Platform
 │
@@ -90,49 +89,35 @@ Food-Donation-Platform
 
 ---
 
-# 🚀 Installation and Setup
+#  Installation and Setup
 
-### 1️⃣ Clone the Repository
+# Clone the Repository
 
 git clone https://github.com/Mychethu/Food-Donation-Platform-.git
 
-### 2️⃣ Navigate to the Project Folder
+# Navigate to the Project Folder
 
 cd Food-Donation-Platform-
 
-### 3️⃣ Install Dependencies
+# Install Dependencies
 
 npm install
 
-### 4️⃣ Run the Server
+# Run the Server
 
 npm start
 
-### 5️⃣ Open in Browser
+# Open in Browser
 
 http://localhost:3000
 
 ---
 
-# 🗄 Database Setup
+# Database Setup
 
 1. Open **MySQL Workbench**
 2. Create a new database
 
-CREATE DATABASE food_donation;
-
-3. Import the SQL file if provided.
-
----
-
-# 📸 Screenshots
-
-(Add screenshots of your project here)
-
-* Login Page
-* Food Donation Page
-* Donation List Page
-* Admin Dashboard
 
 GitHub:
 https://github.com/Mychethu
